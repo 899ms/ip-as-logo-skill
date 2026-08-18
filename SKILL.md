@@ -44,7 +44,18 @@ Create a logo first and a character second. Reduce the subject to a compact symb
 ## Color and canvas
 
 - Use one IP color for monochrome mode, or exactly two IP colors for the default multicolor mode. Reuse those colors for facial marks; do not introduce a third highlight color.
-- Add one separate solid background color. Prefer black, white, or a harmonious moderately saturated solid when the user does not specify one.
+- Add one separate solid background color. Count semantic colors, not lighter or darker shading variants: the normal maximum is two IP colors plus one background color.
+- Prefer a warm off-white such as cream or parchment over pure white, and charcoal or deep navy over pure black. Use pure black or white when the user requests it or when it provides the clearest result.
+- Prefer backgrounds with a clear hue and restrained saturation: terracotta, muted coral, dusty plum, sage or forest green, glaucous or denim blue, ochre, and similar softened colors. Avoid neon, electric, candy-bright, and primary-color intensity unless explicitly requested. Also avoid reducing chroma until the color reads gray, muddy, or lifeless.
+- Evaluate color in OKLCH when numeric control is available; do not use HSL saturation as the primary quality test. Use these default target bands:
+  - chromatic mid-tone background: `L 0.45–0.75`, `C 0.08–0.16`;
+  - dark chromatic background: `L 0.18–0.35`, `C 0.05–0.14`;
+  - cream or parchment background: `L 0.92–0.98`, `C 0.01–0.06`.
+- Treat `C < 0.05` on a chromatic background as likely too gray and `C > 0.20` as likely too saturated. These are defaults, not overrides for a user-supplied color.
+- Maintain at least `3:1` relative-luminance contrast between the dominant IP silhouette and the background, and at least `4.5:1` between small facial marks and the surface beneath them. If the requested palette misses these targets, preserve the requested background and adjust the IP colors first.
+- Build a two-color IP from large continuous regions such as a face mask, hat, shell, belly, or visor. Do not scatter the second color into small decorative patches.
+- Keep highlight and shade variants in the same hue family: shift OKLCH hue by no more than about `5°`, chroma by no more than `0.02`, and lightness by roughly `±0.03–0.05` around the base color. Keep total peak-to-peak lightness variation at or below `0.10`.
+- Keep the background visually solid. Across unobstructed background areas, target no more than about `0.02` OKLCH lightness variation and `0.01` chroma variation; reject visible vignettes or directional gradients. Report model drift rather than silently flattening it in post-processing.
 - Require a fully opaque, edge-to-edge background. Do not generate transparency, an extra white border, outer frame, card, container, rounded App-icon mask, or artificially rounded image corners.
 - Generate a direct `1:1` square with square outer corners. Request approximately `1536 × 1536`; accept and preserve a native `1254 × 1254` result when that is the service output limit. Never resample merely to reach the requested number.
 
@@ -56,6 +67,7 @@ Background: fully opaque edge-to-edge solid <background>; this color is backgrou
 Subject: <subject> reduced to one rounded continuous silhouette and one defining feature.
 Complexity: 6–10 basic shapes, at most two internal color regions, only two eyes and one mouth, readable at 32 × 32.
 IP palette: exactly <one/two> colors, excluding every background-only color.
+Color behavior: softened but clearly chromatic background; warm off-white and charcoal/deep navy are preferred neutrals; silhouette/background contrast >= 3:1 and facial-detail contrast >= 4.5:1; keep shading in the same hue family.
 Composition: upright, emerging from the lower-left or lower-right, filling 75–85%; show both paired identifying features.
 Style: Flat-first with one diffuse internal highlight and one broad internal shade, 8–12% tonal variation, visible but extremely subtle.
 Forbid: illustration detail, repeated anatomy, thin lines, sharp points, third colors, pure flatness, strong 3D, clay, plastic, toy rendering, texture, gloss, bevel, external shadow, text, border, transparency, App mask, or rounded canvas corners.
@@ -65,6 +77,7 @@ Forbid: illustration detail, repeated anatomy, thin lines, sharp points, third c
 
 - It reads as an illustration rather than a symbol, exceeds the complexity budget, or fails at small size.
 - A background-only color appears inside the IP, the background is transparent, or the palette exceeds the selected color mode.
+- A default chromatic background is neon or candy-bright, or is desaturated until it reads gray or muddy; small facial marks lack clear contrast.
 - Any contour is thin, sharp, spiky, or visually fragile.
 - An ear, horn, wing, gill, bell, or other paired identifier is missing or cropped.
 - The IP is too small, centered like a sticker, tilted, framed, or surrounded by excessive empty space.

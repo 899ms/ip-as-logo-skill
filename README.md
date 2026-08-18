@@ -10,6 +10,7 @@ It follows the open Agent Skills format and is designed to work with any compati
 
 - One dominant silhouette built from roughly 6–10 basic shapes
 - One- or two-color IP artwork on a separate solid background
+- A quantified restrained-color default: softened chromatic backgrounds, warm neutrals, and explicit silhouette/detail contrast targets
 - Thick, rounded forms without sharp or fragile details
 - A 75–85% lower-corner crop with paired identifying features preserved
 - Flat-first artwork with only 8–12% soft internal tonal variation
@@ -37,6 +38,8 @@ Create a two-color rounded ghost IP logo on a deep navy background.
 ```
 
 The skill asks for a monochrome or multicolor choice when the request does not already specify one. Multicolor defaults to two IP colors plus one separate background color.
+
+When the user does not supply a palette, the skill favors clearly chromatic but restrained backgrounds rather than neon color or muddy gray. It uses OKLCH target bands when numeric control is available, prefers warm off-white with charcoal or deep navy, and keeps the normal design to no more than three semantic colors including the background.
 
 ## Repository structure
 
