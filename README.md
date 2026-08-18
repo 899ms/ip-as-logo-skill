@@ -2,7 +2,7 @@
 
 `ip-as-logo` is a compact Codex skill for generating highly simplified personified mascot logos. It treats the result as a logo first and a character second: bold rounded silhouettes, strict complexity limits, oversized corner composition, and extremely subtle neo-skeuomorphic shading.
 
-![IP as Logo showcase](assets/ip-as-logo-wall.png)
+![IP as Logo showcase](assets/ip-as-logo-wall.webp)
 
 ## What it enforces
 
@@ -40,7 +40,7 @@ The skill asks for a monochrome or multicolor choice when the request does not a
 
 ```text
 SKILL.md
-assets/ip-as-logo-wall.png
+assets/ip-as-logo-wall.webp
 README.md
 LICENSE
 ```
