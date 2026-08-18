@@ -9,7 +9,7 @@ It follows the open Agent Skills format and is designed to work with any compati
 ## What it enforces
 
 - One dominant silhouette built from roughly 6–10 basic shapes
-- Two-color or three-color total palettes, including the background
+- Three semantic colors by default: two IP base colors plus one background color
 - Three candidates by default: three distinct IP directions when the subject is open, or three controlled variants when the subject is specified
 - A quantified restrained-color default: softened chromatic backgrounds, warm neutrals, and explicit silhouette/detail contrast targets
 - Thick, rounded forms without sharp or fragile details
@@ -35,10 +35,10 @@ For a personal installation, copy `SKILL.md` into `~/.agents/skills/ip-as-logo/`
 Ask your AI agent for an IP mascot logo, for example:
 
 ```text
-Create a two-color rounded ghost IP logo on a deep navy background.
+Create a rounded ghost IP logo on a deep navy background.
 ```
 
-The skill does not ask for a monochrome or multicolor choice by default. It produces one two-color logo with one IP color plus one background, and two three-color logos with two IP colors plus one background. A two-color logo uses background-colored negative space for facial marks rather than introducing a third color.
+The skill does not ask for a color-mode choice by default. Every default candidate uses three semantic colors: two IP base colors plus one background color. It no longer reserves any fraction of the candidate set for two-color logos. Closely related highlight and shade variants may be introduced around either IP base color for the ultra-light neo-skeuomorphic effect without counting as additional semantic colors. A two-color logo is generated only when the user explicitly requests it, and then uses background-colored negative space for facial marks rather than introducing a third color.
 
 When the user already names an IP subject, all three candidates explore that subject through controlled variations. When the subject is open, the skill defaults to three genuinely different IP directions tied to different product attributes or brand promises.
 
@@ -46,7 +46,7 @@ If the skill runs inside a product repository, it inspects relevant read-only co
 
 Compatible agents may generate the three candidates in parallel with subagents. Codex can use ImageGen when available; other agent environments may use any configured image generator. If no generator is available, the skill asks the user to provide or enable one instead of pretending that an image was generated.
 
-When the user does not supply a palette, the skill favors clearly chromatic but restrained backgrounds rather than neon color or muddy gray. It uses OKLCH target bands when numeric control is available, prefers warm off-white with charcoal or deep navy, and keeps the normal design to no more than three semantic colors including the background.
+When the user does not supply a palette, the skill favors clearly chromatic but restrained backgrounds rather than neon color or muddy gray. It uses OKLCH target bands when numeric control is available, prefers warm off-white with charcoal or deep navy, and keeps the normal design to exactly three semantic colors: two IP base colors plus the background. Ultra-light highlight and shade variants must remain close to their corresponding IP base color.
 
 ## Repository structure
 
