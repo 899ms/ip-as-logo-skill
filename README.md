@@ -16,15 +16,15 @@
 
 ## Install
 
-Clone the repository and copy the skill into a project's `.agents/skills` directory:
+Clone the repository, then copy its root `SKILL.md` into a skill directory inside your project's `.agents/skills` folder:
 
 ```bash
 git clone https://github.com/s1dashu/ip-as-logo-skill.git
-mkdir -p /path/to/project/.agents/skills
-cp -R ip-as-logo-skill/.agents/skills/ip-as-logo /path/to/project/.agents/skills/
+mkdir -p /path/to/project/.agents/skills/ip-as-logo
+cp ip-as-logo-skill/SKILL.md /path/to/project/.agents/skills/ip-as-logo/SKILL.md
 ```
 
-For a personal installation, copy the same folder into `~/.codex/skills/` instead.
+For a personal installation, copy `SKILL.md` into `~/.agents/skills/ip-as-logo/` instead.
 
 ## Use
 
@@ -39,8 +39,10 @@ The skill asks for a monochrome or multicolor choice when the request does not a
 ## Repository structure
 
 ```text
-.agents/skills/ip-as-logo/SKILL.md
+SKILL.md
 assets/ip-as-logo-wall.png
+README.md
+LICENSE
 ```
 
 The skill itself intentionally consists of a single instruction document. The repository also includes the showcase image above, but no scripts, style references, or generation dependencies.
