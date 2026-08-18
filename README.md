@@ -1,6 +1,8 @@
 # IP as Logo
 
-`ip-as-logo` is a compact Codex skill for generating highly simplified personified mascot logos. It treats the result as a logo first and a character second: bold rounded silhouettes, strict complexity limits, oversized corner composition, and extremely subtle neo-skeuomorphic shading.
+`ip-as-logo` is a compact Agent Skill for generating highly simplified personified mascot logos. It treats the result as a logo first and a character second: bold rounded silhouettes, strict complexity limits, oversized corner composition, and extremely subtle neo-skeuomorphic shading.
+
+It follows the open Agent Skills format and is designed to work with any compatible AI agent, rather than being tied to a specific agent product.
 
 ![IP as Logo showcase](assets/ip-as-logo-wall.webp)
 
@@ -28,7 +30,7 @@ For a personal installation, copy `SKILL.md` into `~/.agents/skills/ip-as-logo/`
 
 ## Use
 
-Ask Codex for an IP mascot logo, for example:
+Ask your AI agent for an IP mascot logo, for example:
 
 ```text
 Create a two-color rounded ghost IP logo on a deep navy background.
