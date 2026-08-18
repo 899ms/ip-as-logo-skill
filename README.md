@@ -20,15 +20,17 @@ It follows the open Agent Skills format and is designed to work with any compati
 
 ## Install
 
-Clone the repository, then copy its root `SKILL.md` into a skill directory inside your project's `.agents/skills` folder:
+Install the complete skill with the Agent Skills CLI:
 
 ```bash
-git clone https://github.com/s1dashu/ip-as-logo-skill.git
-mkdir -p /path/to/project/.agents/skills/ip-as-logo
-cp ip-as-logo-skill/SKILL.md /path/to/project/.agents/skills/ip-as-logo/SKILL.md
+npx skills@latest add s1dashu/ip-as-logo-skill
 ```
 
-For a personal installation, copy `SKILL.md` into `~/.agents/skills/ip-as-logo/` instead.
+The installer detects the repository's root `SKILL.md`, lets you choose a supported coding agent, and installs the complete `ip-as-logo` directory, including its supporting assets. Use `--global` for a personal installation available across projects:
+
+```bash
+npx skills@latest add s1dashu/ip-as-logo-skill --global
+```
 
 ## Use
 
