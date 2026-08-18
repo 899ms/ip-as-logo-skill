@@ -9,7 +9,8 @@ It follows the open Agent Skills format and is designed to work with any compati
 ## What it enforces
 
 - One dominant silhouette built from roughly 6–10 basic shapes
-- One- or two-color IP artwork on a separate solid background
+- Two-color or three-color total palettes, including the background
+- Three candidates by default: three distinct IP directions when the subject is open, or three controlled variants when the subject is specified
 - A quantified restrained-color default: softened chromatic backgrounds, warm neutrals, and explicit silhouette/detail contrast targets
 - Thick, rounded forms without sharp or fragile details
 - A 75–85% lower-corner crop with paired identifying features preserved
@@ -37,7 +38,13 @@ Ask your AI agent for an IP mascot logo, for example:
 Create a two-color rounded ghost IP logo on a deep navy background.
 ```
 
-The skill asks for a monochrome or multicolor choice when the request does not already specify one. Multicolor defaults to two IP colors plus one separate background color.
+The skill does not ask for a monochrome or multicolor choice by default. It produces one two-color logo with one IP color plus one background, and two three-color logos with two IP colors plus one background. A two-color logo uses background-colored negative space for facial marks rather than introducing a third color.
+
+When the user already names an IP subject, all three candidates explore that subject through controlled variations. When the subject is open, the skill defaults to three genuinely different IP directions tied to different product attributes or brand promises.
+
+If the skill runs inside a product repository, it inspects relevant read-only context before asking questions. A direct logo-generation request with enough product context proceeds immediately. An exploratory request receives three proposed directions first. If the product context is insufficient, the skill asks one consolidated round of background questions, then proposes three directions for confirmation.
+
+Compatible agents may generate the three candidates in parallel with subagents. Codex can use ImageGen when available; other agent environments may use any configured image generator. If no generator is available, the skill asks the user to provide or enable one instead of pretending that an image was generated.
 
 When the user does not supply a palette, the skill favors clearly chromatic but restrained backgrounds rather than neon color or muddy gray. It uses OKLCH target bands when numeric control is available, prefers warm off-white with charcoal or deep navy, and keeps the normal design to no more than three semantic colors including the background.
 
