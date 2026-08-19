@@ -32,6 +32,10 @@ The installer detects the repository's root `SKILL.md`, lets you choose a suppor
 npx skills@latest add s1dashu/ip-as-logo-skill --global
 ```
 
+## Agent compatibility
+
+Supported agents include **Codex, Coze, Doubao, YouMind, Manus, Gemini Apps, and Replit Agent**. This skill only supports agents with built-in image-generation capabilities that can return generated images as assets.
+
 ## Use
 
 Ask your AI agent for an IP mascot logo, for example:
