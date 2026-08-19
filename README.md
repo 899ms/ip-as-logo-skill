@@ -8,7 +8,7 @@ It follows the open Agent Skills format and is designed to work with any compati
 
 ![IP as Logo showcase](assets/ip-as-logo-wall.webp)
 
-**Don't have Codex, Doubao, Coze, or Workbuddy?** [Visit our website](https://ips-logo-skill.vercel.app) to download ready-made logos for free. Every logo is free for commercial use.
+**Don't have Codex, Doubao, Coze, or Workbuddy?** [Visit our website](https://ip-as-logo-skill.vercel.app) to download ready-made logos for free. Every logo is free for commercial use.
 
 ## What it enforces
 

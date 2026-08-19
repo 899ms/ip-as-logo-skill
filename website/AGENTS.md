@@ -12,4 +12,4 @@ This directory is the production logo-library application.
 - Keep all visitor-facing copy in `src/i18n.ts` and maintain parity across English, Simplified Chinese, Japanese, Korean, French, and Spanish.
 - Fail visibly on API and download errors and include query/object context in console logs.
 - Use the Cloudflare, Supabase, and Vercel CLIs for infrastructure changes.
-- The production Vercel project and alias are both named `ips-logo-skill`.
+- The production Vercel project is named `ips-logo-skill`; its primary public alias is `ip-as-logo-skill.vercel.app`.

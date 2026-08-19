@@ -1,6 +1,6 @@
 # IP as Logo Skill website
 
-Free, searchable mascot-logo library deployed at <https://ips-logo-skill.vercel.app>.
+Free, searchable mascot-logo library deployed at <https://ip-as-logo-skill.vercel.app>.
 
 ## Architecture
 
