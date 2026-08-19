@@ -1,6 +1,6 @@
 ---
 name: ip-as-logo
-description: Generate highly simplified personified IP mascot logos with Flat-first geometry, rounded heavy forms, context-aware multicolor palettes, solid backgrounds, and ultra-light neo-skeuomorphic internal modeling. Use when creating an animal, creature, robot, ghost, plant, object, or other character as a minimal square logo or app-icon artwork, including when the agent should infer three product-relevant directions and propose six independent candidates for approval.
+description: Generate highly simplified personified IP mascot logos with Flat-first geometry, rounded heavy forms, two purposeful IP colors over one solid background color, and ultra-light neo-skeuomorphic internal modeling. Use when creating an animal, creature, robot, ghost, plant, object, or other character as a minimal square logo or app-icon artwork, including when the agent should infer three product-relevant directions and propose six independent candidates for approval.
 ---
 
 # IP as Logo
@@ -20,10 +20,10 @@ Create a logo first and a character second. Reduce the subject to a compact symb
    - If the user accepts all three directions and the six-image proposal, generate two independent variants per direction and label them `A1`, `A2`, `B1`, `B2`, `C1`, and `C2`.
    - If the user selects one direction but accepts six images, generate six controlled variants of that direction and label them `A1` through `A6`.
    - If the user rejects the proposed quantity, directions, or distribution, follow the user's replacement instructions without arguing for the default.
-7. Do not default the IP to monochrome and do not impose a fixed semantic-color count. Choose as many broad, purposeful subject colors as the product context, IP identity, and requested mood support; multiple IP colors are allowed by default. Follow any explicit user palette or color-count request. Keep required product cues, identifying features, complexity limits, and any supplied palette consistent enough for useful comparison.
+7. Default every candidate to exactly three semantic colors in the complete artwork: exactly two IP base colors plus exactly one background color. Reuse the two IP colors for facial marks and internal modeling rather than introducing additional semantic colors. Follow an explicit user request for another color count. Keep required product cues, identifying features, complexity limits, and any supplied palette consistent enough for useful comparison.
 8. Determine the available image-generation path before promising output. In Codex, use ImageGen when it is available. In any other agent environment, use an available configured image generator; if none is available, ask the user whether they can provide or enable one. Do not fabricate generated results.
 9. If the runtime supports subagents, parallelize the six independent candidates up to the available concurrency. Give every subagent the same product brief, shared constraints, and one assigned direction or variant; run remaining candidates in subsequent waves when capacity is limited. If subagents are unavailable, generate the candidates through separate image-generation calls or jobs.
-10. If the user supplies a background palette, reserve every supplied color for backgrounds unless they explicitly say otherwise. Choose the IP colors independently for the subject and context unless the user also assigns subject colors. Do not treat any historical or example palette as a closed list of allowed backgrounds.
+10. If the user supplies a background palette, reserve every supplied color for backgrounds unless they explicitly say otherwise. Choose exactly two IP base colors independently for the subject and context unless the user also assigns subject colors. Do not treat any historical or example palette as a closed list of allowed backgrounds.
 11. Abstract each subject using the complexity budget below. Generate every candidate as a separate full-resolution square asset; never ask an image model to compose a contact sheet, grid, or multi-logo image. Do not use existing logos or sibling candidates as image references when testing prompt-only reproducibility.
 12. Inspect every output against every evaluation rule. Retry with one targeted correction when practical; never hide a failed constraint with silent post-processing. Treat a transparent or absent background as an allowed output variation unless the user explicitly requires an opaque background.
 13. Preserve and label every generated result, whether its background is opaque or transparent. Report every label, IP direction and rationale, saved path, prompt/color mapping, dimensions, background mode, and remaining deviations. Present all results together and ask which candidate the user wants to refine.
@@ -34,7 +34,7 @@ When proposing directions before generation, describe each in one compact line: 
 
 - Build one dominant continuous outer silhouette from roughly `6–10` basic geometric shapes.
 - Use at most one species-defining feature: for example, one large pouch beak, one pair of curled horns, or one broad visor.
-- Use only a few broad, purposeful internal color regions; do not impose a fixed count. Keep the face to two eyes and one mouth; omit eyebrows, highlights, nostrils, texture, and decorative marks unless essential.
+- Use at most two broad internal color regions corresponding to the two IP base colors. Keep the face to two eyes and one mouth; omit eyebrows, highlights, nostrils, texture, and decorative marks unless essential.
 - Prefer a head or compact upper-body crop. Do not explain the full anatomy, costume, machinery, or story.
 - Remove repeated feathers, scales, fur tufts, armor plates, buttons, screws, numbers, labels, and other illustrative detail.
 - Require a readable black silhouette and recognizability at `32 × 32`.
@@ -59,12 +59,12 @@ When proposing directions before generation, describe each in one compact line: 
 
 ## Color and canvas
 
-- Do not default the IP to monochrome and do not enforce a fixed number of subject colors. Let the agent choose a compact multicolor palette from the product context, subject identity, intended personality, and user request.
-- Keep every chosen color purposeful and organized into broad readable masses. Do not add small decorative color fragments merely to increase color variety.
-- Choose subject colors independently from the background. Favor clear, lively subject colors when appropriate, but do not impose global saturation, OKLCH, hue-shift, or chroma bands on the IP.
+- Default to exactly three semantic colors in the complete artwork: exactly two IP base colors plus exactly one background color. Closely related tonal variants created by the allowed internal modeling remain part of their underlying IP color family and do not count as extra semantic colors.
+- Choose the two IP colors from the product context, subject identity, intended personality, and user request. Organize both into broad purposeful masses; reuse one for facial marks and keep the other in one continuous defining region rather than scattering decorative fragments.
+- Choose both subject colors independently from the background. Favor clear, lively subject colors when appropriate, but do not impose global saturation, OKLCH, hue-shift, or chroma bands on the IP.
 - Choose the background freely for the context or from a user-supplied palette. Historical palettes and examples are suggestions only, never an allowlist or mandatory default palette.
 - Preserve clear visual separation between the dominant IP silhouette, its facial marks, and the background. If a user-supplied background causes weak separation, adjust the subject colors first rather than replacing the requested background.
-- Across a batch, vary palette strategies deliberately instead of repeating the same neutral-heavy combination.
+- Across a batch, vary the two-IP-color strategies deliberately instead of repeating the same neutral-heavy combination.
 - Keep related highlight and shade variants within the visual family of their underlying subject color. Do not introduce an unrelated hue under the label of shading or split one color into conspicuous stacked layers.
 - Keep an opaque background visually solid and uniform; report visible vignettes or directional gradients rather than silently flattening them in post-processing.
 - Request a fully opaque, edge-to-edge background by default. Keep the selected background visibly present in all four corners and every open area around the IP, with normal square outer corners. Preserve and report a transparent result when the generator returns one.
@@ -93,8 +93,8 @@ For modern instruction-following models and single-prompt interfaces, use the fo
 Create one complete full-bleed 1:1 square IP mascot logo artwork.
 Backdrop: cover the entire canvas with one visible, fully opaque solid <background>. Keep <background> clearly visible in all four square corners and every open area surrounding the mascot.
 Subject: place one highly simplified <subject> mascot over the backdrop, reduced to one rounded continuous silhouette and one defining feature.
-Complexity: use 6–10 broad basic shapes, only a few purposeful internal color regions, and a face with two eyes and one mouth. Keep the symbol readable at 32 × 32.
-Color behavior: do not default the mascot to monochrome and do not impose a fixed color count. Choose a compact, context-aware multicolor IP palette whose broad regions support the subject and personality. Choose the backdrop independently for the context or follow the user's supplied background. Keep the IP, facial marks, and backdrop clearly separated. Treat any example palette as optional inspiration, never as an allowlist.
+Complexity: use 6–10 broad basic shapes, at most two broad internal color regions, and a face with two eyes and one mouth. Keep the symbol readable at 32 × 32.
+Color behavior: use exactly three semantic colors in the complete artwork: exactly two IP base colors plus the backdrop color. Choose the two IP colors from the subject and context, organize both into broad purposeful masses, and reuse them for facial marks. Choose the backdrop independently or follow the user's supplied background. Keep the IP, facial marks, and backdrop clearly separated. Treat any example palette as optional inspiration, never as an allowlist. Closely related tonal variants used for the ultra-light internal modeling do not count as additional semantic colors.
 Composition: keep the mascot upright, emerging from the lower-left or lower-right, filling 75–85% of the square, with both paired identifying features visible.
 Style: use an ultra-clean Flat-first logo treatment with minimal graphic masses and only 8–12% extremely subtle internal tonal modeling inside the IP; barely neo-skeuomorphic, thick, soft, restrained, and scalable. Keep the result mostly flat. Do not prescribe a gradient location, direction, span, edge width, or number of highlights and shadows.
 Finish: show only the mascot over the full-canvas backdrop, with clean geometric surfaces and normal square outer corners.
@@ -104,7 +104,7 @@ Constraints: Use no text or watermark. Add no borders, frames, cards, or App-ico
 ## Mark as non-recommended when
 
 - It reads as an illustration rather than a symbol, exceeds the complexity budget, or fails at small size.
-- The result violates an explicit user palette or color-count request, defaults unnecessarily to a monochrome IP, or scatters colors into decorative fragments that weaken the symbol. An absent backdrop color in a transparent result is an allowed variation.
+- Without an explicit user override, the result does not use exactly two IP base colors plus one background color, or it scatters the second IP color into decorative fragments that weaken the symbol. An absent backdrop color in a transparent result is an allowed variation.
 - The chosen palette reads gray, muddy, washed out, or poorly separated with no explicit user or product reason.
 - A color explicitly supplied for background-only use appears as a painted IP region.
 - The background or facial marks have insufficient visual separation from the subject.
