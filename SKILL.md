@@ -50,8 +50,8 @@ When proposing directions before generation, describe each in one compact line: 
 ## Flat-first, ultra-light neo-skeuomorphism
 
 - Start from flat semantic shapes and a strong, simple silhouette. The first read must remain a clean Flat-first graphic mark.
-- Add only `8–12%` gentle internal light and shade inside the IP: extremely subtle tonal modeling that suggests a soft surface without turning the mark into a rendered object.
-- Keep the tonal transitions broad, soft, low-contrast, and coherent. Do not prescribe a fixed gradient location, edge width, highlight count, shadow count, or numerical hue/chroma shift.
+- Add only `8–12%` extremely subtle internal tonal modeling inside the IP. Keep the result barely neo-skeuomorphic and composed mostly of flat graphic masses.
+- Let the image model realize that restrained tonal change naturally. Do not prescribe a gradient location, direction, span, edge width, highlight count, shadow count, or numerical hue/chroma shift.
 - Keep small facial marks simple and subordinate. Do not add glossy hotspots or detailed cavity rendering to eyes, mouths, noses, or other tiny features.
 - Keep the background visually flat and uniform. Apply tonal modeling only inside the IP, never as a background vignette, spotlight, or directional gradient.
 - Never add an external cast shadow. Avoid dramatic bevels, deep occlusion, glossy highlights, extrusion, photorealistic material rendering, or an obviously volumetric result.
@@ -96,7 +96,7 @@ Subject: place one highly simplified <subject> mascot over the backdrop, reduced
 Complexity: use 6–10 broad basic shapes, only a few purposeful internal color regions, and a face with two eyes and one mouth. Keep the symbol readable at 32 × 32.
 Color behavior: do not default the mascot to monochrome and do not impose a fixed color count. Choose a compact, context-aware multicolor IP palette whose broad regions support the subject and personality. Choose the backdrop independently for the context or follow the user's supplied background. Keep the IP, facial marks, and backdrop clearly separated. Treat any example palette as optional inspiration, never as an allowlist.
 Composition: keep the mascot upright, emerging from the lower-left or lower-right, filling 75–85% of the square, with both paired identifying features visible.
-Style: use Flat-first geometry with only 8–12% gentle internal light and shade inside the IP. Keep the tonal modeling broad, soft, low-contrast, and extremely subtle so the result remains an almost-flat graphic mark. Do not prescribe a fixed edge width, gradient location, or number of highlights and shadows.
+Style: use an ultra-clean Flat-first logo treatment with minimal graphic masses and only 8–12% extremely subtle internal tonal modeling inside the IP; barely neo-skeuomorphic, thick, soft, restrained, and scalable. Keep the result mostly flat. Do not prescribe a gradient location, direction, span, edge width, or number of highlights and shadows.
 Finish: show only the mascot over the full-canvas backdrop, with clean geometric surfaces and normal square outer corners.
 Constraints: Use no text or watermark. Add no borders, frames, cards, or App-icon masks. Include one mascot only, with no extra subjects or scenery. Keep the contours thick and rounded, without fragile lines or sharp tips. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background flat, with no gradient, texture, vignette, or lighting variation.
 ```
@@ -111,8 +111,7 @@ Constraints: Use no text or watermark. Add no borders, frames, cards, or App-ico
 - Any contour is thin, sharp, spiky, or visually fragile.
 - An ear, horn, wing, gill, bell, or other paired identifier is missing or cropped.
 - The IP is too small, centered like a sticker, tilted, framed, or surrounded by excessive empty space.
-- A highlight or shadow becomes an abrupt graphic patch, stacked layer, cel-shaded step, unrelated hue, glossy hotspot, or hard bevel instead of gentle internal tonal modeling.
-- The internal light and shade is materially stronger than the intended `8–12%` subtle variation or makes the result read as a rendered object.
+- The internal tonal modeling is materially stronger than the intended `8–12%` extremely subtle variation or makes the result read as a rendered object.
 - The result becomes noticeably volumetric, inflated, molded, or fully shaded instead of reading as an almost-flat mark with ultra-light internal softness.
 - An opaque background visibly becomes a scene, texture, halo, vignette, or strong gradient rather than reading as a solid field.
 
