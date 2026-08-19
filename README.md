@@ -1,19 +1,24 @@
 # IP as Logo
 
-`ip-as-logo` is a compact Agent Skill for generating highly simplified personified mascot logos. It treats the result as a logo first and a character second: bold rounded silhouettes, strict complexity limits, oversized corner composition, and extremely subtle neo-skeuomorphic shading.
+`ip-as-logo` is a compact Agent Skill for generating highly simplified company-ready mascot logos. It treats the result as a logo first and a character second: familiar cute animals by default, bold rounded silhouettes, strict complexity limits, oversized corner composition, and extremely subtle neo-skeuomorphic shading.
+
+The repository also includes the [IP as Logo Skill website](website/README.md), a free searchable library backed by Cloudflare R2 and Supabase.
 
 It follows the open Agent Skills format and is designed to work with any compatible AI agent, rather than being tied to a specific agent product.
 
 ![IP as Logo showcase](assets/ip-as-logo-wall.webp)
+
+**Don't have Codex, Doubao, Coze, or Workbuddy?** [Visit our website](https://ips-logo-skill.vercel.app) to download ready-made logos for free. Every logo is free for commercial use.
 
 ## What it enforces
 
 - One dominant silhouette built from roughly 6–10 basic shapes
 - Three semantic colors by default: two IP base colors plus one background color
 - Three proposed directions followed by six independently generated candidates after user approval
+- Familiar, broadly appealing animals as the default open-ended subject; objects, machines, fantasy artifacts, and obscure creatures require a clear product reason
 - A quantified restrained-color default: softened chromatic backgrounds, warm neutrals, and explicit silhouette/detail contrast targets
 - Thick, rounded forms without sharp or fragile details
-- A 75–85% lower-corner crop with paired identifying features preserved
+- An 82–90% close crop that visibly peeks or rises from the lower-left or lower-right, with paired identifying features preserved
 - Flat-first artwork with continuous low-frequency gradients capped at `0.08` OKLCH lightness span
 - Opaque square output without an App-icon mask, border, or transparent margin
 - Explicit rejection rules for illustration-level complexity, pure flatness, and excessive 3D volume
@@ -46,7 +51,9 @@ Create a rounded ghost IP logo on a deep navy background.
 
 The skill does not ask for a color-mode choice by default. Every default candidate uses three semantic colors: two IP base colors plus one background color. It no longer reserves any fraction of the candidate set for two-color logos. Closely related highlight and shade variants may be introduced around either IP base color for the ultra-light neo-skeuomorphic effect without counting as additional semantic colors. A two-color logo is generated only when the user explicitly requests it, and then uses background-colored negative space for facial marks rather than introducing a third color.
 
-When the user already names an IP subject, the skill proposes three controlled design treatments of that subject. When the subject is open, it proposes three genuinely different IP directions tied to different product attributes or brand promises.
+When the user already names an IP subject, the skill proposes three controlled design treatments of that subject. When the subject is open, it proposes familiar animal mascots first and ties each to a product attribute or brand promise. In open-ended batches, 95–100% of candidates should be familiar animals; non-animal subjects are limited to a small minority with a direct product connection, never used merely to manufacture novelty.
+
+Large batches create variety within commercially plausible animal mascots through species or breed, ear and muzzle proportions, expression, lower-left versus lower-right emergence, crop, silhouette, and secondary color organization. Clocks, locks, industrial tools, measuring instruments, vehicles, abstract machines, fantasy artifacts, and obscure creatures are not default company mascots.
 
 If the skill runs inside a product repository, it inspects relevant read-only context before asking questions. If product context is insufficient, it asks one consolidated round of background questions. Once context is sufficient, it always presents three concise directions and proposes generating six independent images. It proceeds after the user agrees, or immediately when the user has already explicitly authorized six outputs.
 
