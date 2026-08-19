@@ -2,9 +2,9 @@
 
 `ip-as-logo` is a compact Agent Skill for generating highly simplified company-ready mascot logos. It treats the result as a logo first and a character second: familiar cute animals by default, bold rounded silhouettes, strict complexity limits, oversized corner composition, and extremely subtle neo-skeuomorphic shading.
 
-You can also browse the free [IP as Logo Skill website](https://ip-as-logo-skill.vercel.app), a searchable library backed by Cloudflare R2 and Supabase.
-
 It follows the open Agent Skills format and is designed to work with any compatible AI agent, rather than being tied to a specific agent product.
+
+You can also browse the free [IP as Logo Skill website](https://ip-as-logo-skill.vercel.app), a searchable library backed by Cloudflare R2 and Supabase.
 
 ![IP as Logo showcase](assets/ip-as-logo-wall.webp)
 
