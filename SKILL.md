@@ -25,8 +25,8 @@ Create a logo first and a character second. Reduce the subject to a compact symb
 9. If the runtime supports subagents, parallelize the six independent candidates up to the available concurrency. Give every subagent the same product brief, shared constraints, and one assigned direction or variant; run remaining candidates in subsequent waves when capacity is limited. If subagents are unavailable, generate the candidates through separate image-generation calls or jobs.
 10. If the user supplies a background palette, reserve every supplied color for backgrounds unless they explicitly say otherwise. Keep the two IP base colors distinct from the background. When the user explicitly requests a two-color logo, allow the background color to reappear only as negative-space facial cutouts, not as a separate painted IP region.
 11. Abstract each subject using the complexity budget below. Generate every candidate as a separate full-resolution square asset; never ask an image model to compose a contact sheet, grid, or multi-logo image. Do not use existing logos or sibling candidates as image references when testing prompt-only reproducibility.
-12. Inspect every output against every rejection rule. Retry with one targeted correction when practical; never hide a failed constraint with silent post-processing.
-13. Preserve each model's native square output. Report every label, IP direction and rationale, saved path, prompt/color mapping, dimensions, opacity, and any remaining deviations. Ask which candidate the user wants to refine.
+12. Inspect every output against every evaluation rule. Retry with one targeted correction when practical; never hide a failed constraint with silent post-processing. Treat a transparent or absent background as an allowed output variation unless the user explicitly requires an opaque background.
+13. Preserve and label every generated result, whether its background is opaque or transparent. Report every label, IP direction and rationale, saved path, prompt/color mapping, dimensions, background mode, and remaining deviations. Present all results together and ask which candidate the user wants to refine.
 
 When proposing directions before generation, describe each in one compact line: `<IP subject> — <product connection> — <defining silhouette>`. End with a direct proposal to generate six images using the distribution above. Do not turn the discovery phase into a long branding workshop unless the user asks for one.
 
@@ -58,7 +58,7 @@ When proposing directions before generation, describe each in one compact line: 
 - Allow shallow contact darkening only as a soft continuation of the same gradient where two large regions meet. Never create a closed contact-shadow blob, a second internal contour, or an ambient-occlusion seam.
 - Keep the background visually flat. Apply continuous tonal modeling only inside the IP, never as a vignette, spotlight, or directional background gradient.
 - Make the micro-volume visible at full resolution but almost disappear at `32 × 32`, leaving only the flat silhouette and semantic color regions.
-- Never add realistic materials, texture, specular gloss, rim light, bevels, extrusion, deep occlusion, or an external cast shadow. Reject pure flat fills with no tonal modeling, but also reject clay, inflatable, plastic, plush, toy-like, photorealistic, or strongly three-dimensional results.
+- Keep the finish clean and softly dimensional. Use the broad continuous gradients above to create restrained micro-volume while preserving the clarity of the underlying flat geometric shapes.
 
 ## Color and canvas
 
@@ -72,33 +72,51 @@ When proposing directions before generation, describe each in one compact line: 
   - dark chromatic background: `L 0.18–0.35`, `C 0.05–0.14`;
   - cream or parchment background: `L 0.92–0.98`, `C 0.01–0.06`.
 - Treat `C < 0.05` on a chromatic background as likely too gray and `C > 0.20` as likely too saturated. These are defaults, not overrides for a user-supplied color.
-- Maintain at least `3:1` relative-luminance contrast between the dominant IP silhouette and the background, and at least `4.5:1` between small facial marks and the surface beneath them. If the requested palette misses these targets, preserve the requested background and adjust the IP colors first.
+- Maintain at least `3:1` relative-luminance contrast between the dominant IP silhouette and the intended background, and at least `4.5:1` between small facial marks and the surface beneath them. If the requested palette misses these targets, preserve the requested background and adjust the IP colors first. For a transparent result, report background contrast as dependent on its eventual placement rather than treating it as a failure.
 - Build the second IP base color from a large continuous region such as a face mask, hat, shell, belly, or visor. Do not scatter it into small decorative patches.
 - Do not introduce an unrelated hue under the label of shading. Do not quantize a continuous gradient into several neighboring flat swatches or count layered light and dark patches as acceptable color-family variants.
-- Keep the background visually solid. Across unobstructed background areas, target no more than about `0.02` OKLCH lightness variation and `0.01` chroma variation; reject visible vignettes or directional gradients. Report model drift rather than silently flattening it in post-processing.
-- Require a fully opaque, edge-to-edge background. Do not generate transparency, an extra white border, outer frame, card, container, rounded App-icon mask, or artificially rounded image corners.
+- Keep an opaque background visually solid. Across unobstructed background areas, target no more than about `0.02` OKLCH lightness variation and `0.01` chroma variation; report visible vignettes or directional gradients rather than silently flattening them in post-processing.
+- Request a fully opaque, edge-to-edge background by default. Keep the selected background visibly present in all four corners and every open area around the IP, with normal square outer corners. Preserve and report a transparent result when the generator returns one.
 - Generate a direct `1:1` square with square outer corners. Request approximately `1536 × 1536`; accept and preserve a native `1254 × 1254` result when that is the service output limit. Never resample merely to reach the requested number.
 
 ## Prompt skeleton
 
+### Route constraints by generator capability
+
+Determine the available image model and its actual tool schema from runtime metadata, configured provider documentation, or an explicit user statement. Do not guess a model or invent unsupported parameters.
+
+- For modern instruction-following image models such as GPT Image 2, Nano Banana Pro, and Seedream 5.0 Pro, keep the complete positive prompt and express the minimal exclusions as the natural-language `Constraints:` line inside the main prompt. Do not create a separate negative-prompt payload for these models.
+- For an older model or runtime that explicitly exposes a dedicated parameter such as `negative_prompt`, keep every positive prompt line unchanged and deliver the minimal exclusions through that dedicated parameter in the syntax required by the available adapter. Omit the natural-language `Constraints:` line from the main prompt to avoid duplicating the same exclusions in both channels.
+- For an older model without a dedicated negative-prompt parameter, follow its documented prompt format. When only one prompt string is available, retain the concise natural-language `Constraints:` line.
+- Record the model or provider, the detected constraint-delivery mode (`main-prompt constraints` or `dedicated negative parameter`), and the exact constraint text or payload in the generation report.
+
+When a dedicated legacy negative-prompt parameter is available, adapt this minimal payload to its required syntax:
+
 ```text
-Create one highly simplified IP mascot logo candidate, not a character illustration.
-Background: fully opaque edge-to-edge solid <background>; use this color only for the background.
-Subject: <subject> reduced to one rounded continuous silhouette and one defining feature.
-Complexity: 6–10 basic shapes, at most two internal color regions, only two eyes and one mouth, readable at 32 × 32.
-Color count: exactly three semantic colors in the complete logo: two IP base colors plus one background color. Reuse one IP color for facial marks and keep the second IP color in one continuous region.
-Color behavior: softened but clearly chromatic background; warm off-white and charcoal/deep navy are preferred neutrals; silhouette/background contrast >= 3:1 and facial-detail contrast >= 4.5:1. Allow only continuous same-family tonal variation around each IP base color; do not count that variation as new semantic colors.
-Composition: upright, emerging from the lower-left or lower-right, filling 75–85%; show both paired identifying features.
-Style: Flat-first geometry with continuous-gradient micro-volume. Use one uninterrupted low-frequency diffuse gradient per large IP color region, sharing one upper-left-to-lower-right light direction. Make every transition span at least 50% of the dominant form. Limit total OKLCH lightness variation to 0.08, hue drift to 3 degrees, and chroma drift to 0.015. The modeling should be visible at full size but nearly disappear at 32 × 32.
-Forbid: discrete highlight patches, closed highlight blobs, overlay bands, nested shadow shapes, cut-paper layers, cel-shading regions, stepped tonal swatches, hard internal shadow boundaries, small glossy hotspots, independent lighting on facial details, illustration detail, repeated anatomy, thin lines, sharp points, colors beyond the selected total count, pure flatness, strong 3D, clay, plastic, toy rendering, texture, gloss, bevel, external shadow, text, border, transparency, App mask, or rounded canvas corners.
+text, watermark, borders, frames, cards, App-icon masks, extra subjects, scenery, thin fragile lines, sharp tips, photorealistic materials, strong three-dimensional rendering, external cast shadows
 ```
 
-## Reject the output when
+For modern instruction-following models and single-prompt interfaces, use the following complete prompt:
+
+```text
+Create one complete full-bleed 1:1 square IP mascot logo artwork.
+Backdrop: cover the entire canvas with one visible, fully opaque solid <background>. Keep <background> clearly visible in all four square corners and every open area surrounding the mascot.
+Subject: place one highly simplified <subject> mascot over the backdrop, reduced to one rounded continuous silhouette and one defining feature.
+Complexity: use 6–10 broad basic shapes, at most two internal color regions, and a face with two eyes and one mouth. Keep the symbol readable at 32 × 32.
+Color count: use exactly three semantic colors in the complete artwork: two IP base colors plus the backdrop color. Reuse one IP color for facial marks and keep the second IP color in one large continuous region.
+Color behavior: choose a softened but clearly chromatic backdrop, with warm off-white and charcoal or deep navy as preferred neutrals. Maintain silhouette-to-backdrop contrast of at least 3:1 and facial-detail contrast of at least 4.5:1. Treat continuous same-family tonal variation as modeling within each selected IP base color.
+Composition: keep the mascot upright, emerging from the lower-left or lower-right, filling 75–85% of the square, with both paired identifying features visible.
+Style: use Flat-first geometry with gentle continuous-gradient micro-volume. Apply one uninterrupted, low-frequency, same-family gradient inside each large IP color region, sharing one upper-left-to-lower-right light direction. Make each transition span at least 50% of the dominant form. Keep total OKLCH lightness variation at or below 0.08, hue drift within 3 degrees, and chroma drift within 0.015. Keep the backdrop visually uniform and let the tonal modeling become subtle at icon size.
+Finish: show only the mascot over the full-canvas backdrop, with clean geometric surfaces and normal square outer corners.
+Constraints: Use no text or watermark. Add no borders, frames, cards, or App-icon masks. Include one mascot only, with no extra subjects or scenery. Keep the contours thick and rounded, without fragile lines or sharp tips. Keep the finish graphic and softly dimensional, without photorealistic materials, strong three-dimensional rendering, or external cast shadows.
+```
+
+## Mark as non-recommended when
 
 - It reads as an illustration rather than a symbol, exceeds the complexity budget, or fails at small size.
-- The default palette does not contain exactly two IP base colors plus one background color; the second IP color is scattered into decorative patches; shading introduces an unrelated hue; or an explicitly requested two-color logo adds a separate facial-feature color.
-- A background-only color appears as a painted IP region rather than a negative-space cutout, or the background is transparent.
-- A default chromatic background is neon or candy-bright, or is desaturated until it reads gray or muddy; small facial marks lack clear contrast.
+- The IP does not contain the requested number of base colors; the second IP color is scattered into decorative patches; shading introduces an unrelated hue; or an explicitly requested two-color logo adds a separate facial-feature color. An absent backdrop color in a transparent result is an allowed variation.
+- A background-only color appears as a painted IP region rather than a negative-space cutout.
+- An opaque default chromatic background is neon or candy-bright, or is desaturated until it reads gray or muddy; small facial marks lack clear contrast.
 - Any contour is thin, sharp, spiky, or visually fragile.
 - An ear, horn, wing, gill, bell, or other paired identifier is missing or cropped.
 - The IP is too small, centered like a sticker, tilted, framed, or surrounded by excessive empty space.
@@ -106,7 +124,7 @@ Forbid: discrete highlight patches, closed highlight blobs, overlay bands, neste
 - Tonal modeling divides one semantic color into stacked layers, overlay bands, cel-shaded steps, or several neighboring flat swatches.
 - A gradient changes direction between adjacent parts, transitions across less than half of the dominant form, or creates a small glossy hotspot.
 - At `32 × 32`, the tonal modeling still reads as an extra color region instead of nearly disappearing.
-- The result is completely flat or noticeably volumetric instead of subtly modeled.
-- The background visibly becomes a scene, texture, halo, vignette, or strong gradient rather than reading as a solid field.
+- The result lacks the requested gentle gradient modeling or becomes noticeably volumetric instead of subtly modeled.
+- An opaque background visibly becomes a scene, texture, halo, vignette, or strong gradient rather than reading as a solid field.
 
-When a generated result fails, state the exact failed rules. Do not claim compliance and do not silently repair it with code.
+Background transparency by itself is permitted and must not make a result non-recommended. State the exact evaluation findings for every candidate, preserve both opaque and transparent results, and present them together without silently repairing either mode with code.
