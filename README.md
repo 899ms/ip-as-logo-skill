@@ -16,7 +16,7 @@ You can also browse the free [IP as Logo Skill website](https://ipaslogo.com), a
 - Three semantic colors by default: two IP base colors plus one background color
 - Three proposed directions followed by six independently generated candidates after user approval
 - Familiar, broadly appealing animals as the default open-ended subject; objects, machines, fantasy artifacts, and obscure creatures require a clear product reason
-- Context-aware, clearly separated subject and background colors without prescribing gradient, shading, or dimensional treatments
+- Context-aware, clearly separated subject and background colors with barely-there neo-skeuomorphic depth, described without percentages or prescribed gradient and shading formulas
 - Thick, rounded forms without sharp or fragile details
 - A 75–85% close crop that visibly peeks or rises from the lower-left or lower-right, with paired identifying features preserved
 - Extreme simplification, cute baby-like appeal, and removal of nonessential lines and details
