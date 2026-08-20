@@ -1,14 +1,12 @@
 # IP as Logo
 
-`ip-as-logo` is a compact Agent Skill for generating highly simplified company-ready mascot logos. It treats the result as a logo first and a character second: familiar cute animals by default, bold rounded silhouettes, strict complexity limits, oversized corner composition, and extremely subtle neo-skeuomorphic shading.
+`ip-as-logo` is a compact Agent Skill for generating highly simplified company-ready mascot logos. It treats the result as a logo first and a character second: familiar cute animals by default, bold rounded silhouettes, strict complexity limits, oversized corner composition, and broad flat color masses.
 
-It follows the open Agent Skills format and is designed to work with any compatible AI agent, rather than being tied to a specific agent product.
-
-You can also browse the free [IP as Logo Skill website](https://ip-as-logo-skill.vercel.app), a searchable library backed by Cloudflare R2 and Supabase.
+You can also browse the free [IP as Logo Skill website](https://ipaslogo.com), a searchable library backed by Cloudflare R2 and Supabase.
 
 ![IP as Logo showcase](assets/ip-as-logo-wall.webp)
 
-**Don't have Codex, Doubao, Coze, or Workbuddy?** [Visit our website](https://ip-as-logo-skill.vercel.app) to download ready-made logos for free. Every logo is free for commercial use.
+**Don't have Codex, Doubao, Coze, or Workbuddy?** [Visit our website](https://ipaslogo.com) to download ready-made logos for free. Every logo is free for commercial use.
 
 ## What it enforces
 
@@ -19,9 +17,9 @@ You can also browse the free [IP as Logo Skill website](https://ip-as-logo-skill
 - A quantified restrained-color default: softened chromatic backgrounds, warm neutrals, and explicit silhouette/detail contrast targets
 - Thick, rounded forms without sharp or fragile details
 - An 82–90% close crop that visibly peeks or rises from the lower-left or lower-right, with paired identifying features preserved
-- Flat-first artwork with continuous low-frequency gradients capped at `0.08` OKLCH lightness span
-- Opaque square output without an App-icon mask, border, or transparent margin
-- Explicit rejection rules for illustration-level complexity, pure flatness, and excessive 3D volume
+- Flat-first artwork with broad, uniform filled color masses and no internal shading or gradients
+- One specifically named canvas color that fills the square edge-to-edge and remains visible in all four corners
+- One-pass unfiltered candidate batches with no visual review, rejection, repair, or style-compliance retry
 
 ## Install
 
@@ -39,6 +37,8 @@ npx skills@latest add s1dashu/ip-as-logo-skill --global
 
 ## Agent compatibility
 
+It follows the open Agent Skills format and is designed to work with any compatible AI agent, rather than being tied to a specific agent product.
+
 Supported agents include **Codex, Coze, Doubao, YouMind, Manus, Gemini Apps, and Replit Agent**. This skill only supports agents with built-in image-generation capabilities that can return generated images as assets.
 
 ## Use
@@ -49,7 +49,7 @@ Ask your AI agent for an IP mascot logo, for example:
 Create a rounded ghost IP logo on a deep navy background.
 ```
 
-The skill does not ask for a color-mode choice by default. Every default candidate uses three semantic colors: two IP base colors plus one background color. It no longer reserves any fraction of the candidate set for two-color logos. Closely related highlight and shade variants may be introduced around either IP base color for the ultra-light neo-skeuomorphic effect without counting as additional semantic colors. A two-color logo is generated only when the user explicitly requests it, and then uses background-colored negative space for facial marks rather than introducing a third color.
+The skill does not ask for a color-mode choice by default. Every default candidate uses three semantic colors: two IP base colors plus one specifically named canvas color. It no longer reserves any fraction of the candidate set for two-color logos. A two-color logo is generated only when the user explicitly requests it, and then uses canvas-colored negative space for facial marks rather than introducing a third color.
 
 When the user already names an IP subject, the skill proposes three controlled design treatments of that subject. When the subject is open, it proposes familiar animal mascots first and ties each to a product attribute or brand promise. In open-ended batches, 95–100% of candidates should be familiar animals; non-animal subjects are limited to a small minority with a direct product connection, never used merely to manufacture novelty.
 
@@ -61,7 +61,7 @@ When the user accepts all three directions, the default batch contains two varia
 
 Compatible agents may generate the six candidates in parallel with subagents up to the runtime's available concurrency, using additional waves when needed. Codex can use ImageGen when available; other agent environments may use any configured image generator. If no generator is available, the skill asks the user to provide or enable one instead of pretending that an image was generated. Every result is a separate full-resolution square asset, never a six-logo contact sheet.
 
-When the user does not supply a palette, the skill favors clearly chromatic but restrained backgrounds rather than neon color or muddy gray. It uses OKLCH target bands when numeric control is available, prefers warm off-white with charcoal or deep navy, and keeps the normal design to exactly three semantic colors: two IP base colors plus the background. Ultra-light highlight and shade variants must remain close to their corresponding IP base color.
+When the user does not supply a palette, the skill chooses and explicitly names a clearly chromatic but restrained canvas color rather than neon color or muddy gray. It keeps the normal design to exactly three semantic colors: two IP base colors plus the named canvas color. Prompts describe that color as filling the full square and do not use image-mode terminology.
 
 ## Repository structure
 
@@ -76,7 +76,7 @@ The skill itself intentionally consists of a single instruction document. The re
 
 ## Model behavior
 
-Image-generation models may still introduce background gradients, crop paired features, replace continuous micro-gradients with layered color patches, or add too much volume. The skill treats those as failures to report or retry, rather than silently claiming compliance or repairing the image after generation.
+Image-generation models may still introduce unwanted shading, crop paired features, or add too much volume. The skill treats each batch as a one-pass draw: every returned image is preserved and presented without visual compliance review, scoring, filtering, repair, or retry. A call that returns no usable image asset is reported as a technical failure rather than fabricated or silently replaced.
 
 ## License
 
