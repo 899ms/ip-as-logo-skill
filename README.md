@@ -18,7 +18,7 @@ You can also browse the free [IP as Logo Skill website](https://ipaslogo.com), a
 - Familiar, broadly appealing animals as the default open-ended subject; objects, machines, fantasy artifacts, and obscure creatures require a clear product reason
 - Context-aware, clearly separated subject and background colors with barely-there neo-skeuomorphic depth, described without percentages or prescribed gradient and shading formulas
 - Thick, rounded forms without sharp or fragile details
-- A head-only 75–85% close crop that physically crosses the bottom edge and either the lower-left or lower-right edge, with paired identifying features preserved
+- A head-only 85–95% extreme close crop that physically crosses the bottom edge and either the lower-left or lower-right edge, with paired identifying features preserved
 - A balanced default six-image composition split: three lower-left and three lower-right, never centered or floating
 - Extreme simplification, cute baby-like appeal, and removal of nonessential lines and details
 - One named solid background color filling the square, without image-mode language in the generation prompt
@@ -61,7 +61,7 @@ If the skill runs inside a product repository, it inspects relevant read-only co
 
 When the user accepts all three directions, the default batch contains two variants per direction: `A1`, `A2`, `B1`, `B2`, `C1`, and `C2`. The first variant of each direction emerges from the lower-left and the second from the lower-right. When the user selects one direction, the skill generates six controlled variants with odd labels on the lower-left and even labels on the lower-right. This guarantees a three-left, three-right default split. If the user rejects the proposed quantity or distribution, their replacement instructions take precedence.
 
-Every default candidate is an oversized head-only crop rather than a full character or compact body. The head must touch and cross the bottom edge and its assigned side edge, so the assigned corner is occupied and the character cannot drift into a centered, four-sided floating composition. Bottom-center emergence is used only when the user explicitly requests it.
+Every default candidate is an oversized head-only extreme close-up rather than a full character or compact body. The head must touch and cross the bottom edge and its assigned side edge, rise into the upper third, and bring the opposite cheek close to the opposite edge. This keeps the assigned corner occupied, makes the IP visually dominant, and prevents a centered, four-sided floating composition. Bottom-center emergence is used only when the user explicitly requests it.
 
 Compatible agents may generate the six candidates in parallel with subagents up to the runtime's available concurrency, using additional waves when needed. Codex can use ImageGen when available; other agent environments may use any configured image generator. If no generator is available, the skill asks the user to provide or enable one instead of pretending that an image was generated. Every result is a separate full-resolution square asset, never a six-image contact sheet.
 
