@@ -17,9 +17,10 @@ Create the simplest possible cute IP character: a compact, lovable symbol that r
    - When the user explicitly specifies an IP subject, keep that subject and propose three distinct design treatments based on composition, silhouette treatment, secondary color region, or personality emphasis.
    - When the user does not specify an IP subject, propose three genuinely different IP subjects or metaphors. Tie each one to a different product attribute or brand promise; do not return three arbitrary animals with no rationale.
 6. Interpret the user's response exactly:
-   - If the user accepts all three directions and the six-image proposal, generate two independent variants per direction and label them `A1`, `A2`, `B1`, `B2`, `C1`, and `C2`.
-   - If the user selects one direction but accepts six images, generate six controlled variants of that direction and label them `A1` through `A6`.
+   - If the user accepts all three directions and the six-image proposal, generate two independent variants per direction and label them `A1`, `A2`, `B1`, `B2`, `C1`, and `C2`. Assign `A1`, `B1`, and `C1` to the lower-left and `A2`, `B2`, and `C2` to the lower-right so every direction is tested once from each side.
+   - If the user selects one direction but accepts six images, generate six controlled variants of that direction and label them `A1` through `A6`. Assign odd-numbered variants to the lower-left and even-numbered variants to the lower-right.
    - If the user rejects the proposed quantity, directions, or distribution, follow the user's replacement instructions without arguing for the default.
+   - For any other even default batch size, split the candidates equally between lower-left and lower-right. For an odd batch, assign the extra candidate to either side deliberately and record the imbalance. Do not use bottom-center unless the user explicitly requests it.
 7. Default every candidate to exactly three semantic colors in the complete image: exactly two IP base colors plus exactly one background color. Reuse the two IP colors for facial marks rather than introducing additional semantic colors. Follow an explicit user request for another color count. Keep required product cues, identifying features, complexity limits, and any supplied palette consistent enough for useful comparison.
 8. Determine the available image-generation path before promising output. In Codex, use ImageGen when it is available. In any other agent environment, use an available configured image generator; if none is available, ask the user whether they can provide or enable one. Do not fabricate generated results.
 9. If the runtime supports subagents, parallelize the six independent candidates up to the available concurrency. Give every subagent the same product brief, shared constraints, and one assigned direction or variant; run remaining candidates in subsequent waves when capacity is limited. If subagents are unavailable, generate the candidates through separate image-generation calls or jobs.
@@ -35,7 +36,7 @@ When proposing directions before generation, describe each in one compact line: 
 - Build one dominant continuous outer silhouette from roughly `4–7` large basic geometric shapes. Merge or delete any shape that does not carry identity, expression, or recognition.
 - Use at most one species-defining feature: for example, one large pouch beak, one pair of curled horns, or one broad visor.
 - Use at most two broad internal color regions corresponding to the two IP base colors. Keep the face to two eyes and, only when needed for the expression, one tiny mouth. Omit eyebrows, highlights, nostrils, texture, outlines, and decorative marks unless essential for recognition.
-- Prefer a head or compact upper-body crop. Do not explain the full anatomy, costume, machinery, or story.
+- Use a head-only crop by default. Omit the neck, shoulders, torso, arms, hands, and every other body part. Include compact upper-body anatomy only when the user explicitly requests it or when the selected subject cannot be recognized as a head.
 - Remove repeated feathers, scales, fur tufts, armor plates, buttons, screws, numbers, labels, and other illustrative detail.
 - Make simplification, cuteness, and an endearing baby-like personality the decisive qualities. Favor a large head, compact proportions, soft cheeks, widely spaced simple eyes, and a calm friendly expression when appropriate to the subject.
 - Require a readable black silhouette and recognizability at `32 × 32`. If a feature disappears or becomes noise at that size, enlarge, merge, or remove it.
@@ -45,7 +46,9 @@ When proposing directions before generation, describe each in one compact line: 
 - Use thick, rounded, weighty contours and broad color masses.
 - Forbid sharp corners, pointed ears or beaks, needle-like tails, thin antennae, thin smiles, narrow gaps, and acute flame or feather tips. Replace every necessary tip with a visibly blunt rounded end.
 - Show both members of paired identifying features, such as ears, horns, wings, gills, or bells.
-- Let the IP emerge from the lower-left or lower-right corner and fill about `75–85%` of the canvas. Cropping at the bottom or side is intentional, but do not crop an identifying paired feature.
+- Show only the oversized head emerging from the assigned lower-left or lower-right corner and filling about `75–85%` of the canvas. The head silhouette must physically cross both the bottom edge and the assigned side edge, occupying that corner; the crop is intentional.
+- Never center the head, float it with background visible beneath it, or leave margin around all sides of it. Do not use bottom-center unless the user explicitly requests it.
+- Preserve both members of a paired identifying feature within the visible crop. Crop the lower cheek, jaw, or back of the head instead of cropping an identifying ear, horn, eye, or equivalent feature.
 - Keep the artwork upright; never rotate the canvas or tilt the main mark without an explicit request.
 
 ## Simplicity and visual treatment
@@ -66,7 +69,7 @@ When proposing directions before generation, describe each in one compact line: 
 - Preserve clear visual separation between the dominant IP silhouette, its facial marks, and the background. If a user-supplied background causes weak separation, adjust the subject colors first rather than replacing the requested background.
 - Across a batch, vary the two-IP-color strategies deliberately instead of repeating the same neutral-heavy combination.
 - Treat the two character colors as semantic color families. Incidental tonal variation within either family does not invalidate an output.
-- Name the intended solid background color directly. Ask for that color to fill the square and remain visible in all four corners and every open area around the IP, with normal square outer corners. Do not use image-mode terms such as `opaque`, `alpha`, or `transparency` in the generation prompt.
+- Name the intended solid background color directly. Ask for that color to fill every open area around the IP and the unoccupied corners, while the assigned emergence corner is deliberately occupied by the cropped head. Do not require the background to remain visible in all four corners, because that conflicts with corner emergence. Do not use image-mode terms such as `opaque`, `alpha`, or `transparency` in the generation prompt.
 - Generate a direct `1:1` square with square outer corners. Request approximately `1536 × 1536`; accept and preserve a native `1254 × 1254` result when that is the service output limit. Never resample merely to reach the requested number.
 
 ## Prompt skeleton
@@ -92,11 +95,11 @@ For modern instruction-following models and single-prompt interfaces, use the fo
 
 ```text
 Create one complete full-bleed 1:1 square image.
-Background: fill the entire square with solid <background>. Keep <background> clearly visible in all four square corners and every open area surrounding the character.
-Subject: place one extremely simplified, cute, endearing <subject> IP character on the background, reduced to one soft rounded continuous silhouette and one defining feature.
+Background: fill the entire square with solid <background>. Keep <background> visible in every open area and in the corners not occupied by the character; the assigned emergence corner must be occupied by the cropped head.
+Subject: place one extremely simplified, cute, endearing <subject> IP character head on the background, reduced to one soft rounded continuous silhouette and one defining feature. Show the head only: no neck, shoulders, torso, arms, hands, or other body parts.
 Complexity: use only 4–7 large basic shapes and at most two broad internal color regions. Use two simple eyes and add one tiny mouth only when it helps the expression. Remove every nonessential line, outline, anatomical detail, texture, and decoration. Keep the character readable at 32 × 32.
 Color behavior: use exactly three semantic colors in the complete image: exactly two IP base colors plus the background color. Choose the two IP colors from the subject and context, organize both into broad purposeful masses, and reuse them for facial marks. Choose the background independently or follow the user's supplied background. Keep the IP, facial marks, and background clearly separated. Treat any example palette as optional inspiration, never as an allowlist.
-Composition: keep the mascot upright, emerging from the lower-left or lower-right, filling 75–85% of the square, with both paired identifying features visible.
+Composition: keep the oversized head upright, emerging from the assigned <lower-left or lower-right>, and filling 75–85% of the square. Make the head silhouette cross both the bottom edge and the assigned side edge so it visibly occupies that corner. Preserve both paired identifying features. Never center or bottom-center the head, never float it above the bottom edge, and never leave background margin around all sides.
 Style: make simplification, cuteness, and lovable baby-like appeal the strongest qualities. Use large soft forms, compact proportions, thick rounded contours, and an ultra-clean graphic treatment. Prefer one clear shape over several explanatory details. Add an extremely, extremely subtle, almost imperceptible sense of depth through a barely-there neo-skeuomorphic treatment.
 Finish: show only the character on the full-canvas background, with clean surfaces and normal square outer corners.
 Constraints: Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.
